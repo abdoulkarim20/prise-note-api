@@ -44,8 +44,52 @@ const getDetailNote = async (req, res, nex) => {
     }
 }
 
+const deleteNoteById = async (req, res, nex) => {
+    try {
+        const noteDeleted = await Note.findByIdAndDelete(req.params.id);
+        if (!noteDeleted) {
+            return res.status(400).json({
+                success: true,
+                message: `Aucune note trouvée pour cet identenfiant : ${res.params.id}`
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: `Note supprimée avec succes`
+        })
+    } catch (error) {
+        nex(error)
+    }
+}
+
+const updateNote = async (req, res, nex) => {
+    try {
+        const { titre, contenue } = req.body;
+        const notreUpdated = await Note.findByIdAndUpdate(
+            req.params.id,
+            { titre, contenue, updatedAt: Date.now() },
+            { new: true, runValidators: true }
+        )
+        if (!notreUpdated) {
+            return res.status(400).json({
+                success: true,
+                message: "Aucune note trouvée"
+            })
+        }
+        res.json({
+            success: true,
+            message: "Note modifiée avec succes",
+            note: notreUpdated
+        })
+    } catch (error) {
+        nex(error)
+    }
+}
+
 module.exports = {
     getAllNotes,
     createNote,
-    getDetailNote
+    getDetailNote,
+    deleteNoteById,
+    updateNote
 }
