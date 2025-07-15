@@ -6,23 +6,18 @@ const app = express();
 const PORT = process.env.PORT || 3000
 /*Faire une connexion a la base des donnees*/
 connectDB();
-
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Routes
+/*Routes*/
 app.use('/api/notes', noteRoutes);
-
-/*Test*/
-// Route de test
+/*Test api*/
 const user = {
     prenoom: 'Abdoul Karim',
     nom: 'DIALLO',
     age: 28,
     profession: 'Developpeur senior',
     pays: 'Senegal'
-
 }
 app.get('/api/test', (req, res) => {
     res.json({
@@ -31,8 +26,6 @@ app.get('/api/test', (req, res) => {
         data: user
     });
 });
-
-/**Alumer le serveur*/
 app.listen(PORT, () => {
     console.log(`🚀 Serveur ${process.env.APP_NAME} lancé sur http://localhost:${PORT}`);
 })
