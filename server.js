@@ -10,7 +10,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 /*Routes*/
-app.use('/api/notes', noteRoutes);
+app.use('/v1/api/notes', noteRoutes);
 /*Test api*/
 const user = {
     prenoom: 'Abdoul Karim',
